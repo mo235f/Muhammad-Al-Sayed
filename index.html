@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Computer Science</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      background-color: #f4f6f8;
+    }
+
+    /* Splash Screen */
+    #splash {
+      background: url("photo/photosec1.jfif") no-repeat center center/cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1s ease-in forwards;
+    }
+
+    #splash h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: slideDown 1.5s ease-out forwards 0.5s;
+    }
+
+    #splash img {
+      width: 180px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      opacity: 0;
+      animation: fadeZoom 2s ease-out forwards 1s;
+    }
+
+    #splash p {
+      font-size: 1.5em;
+      opacity: 0;
+      animation: fadeUp 1.5s ease-out forwards 2s;
+    }
+
+    .fade-out {
+      animation: fadeOut 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    @keyframes slideDown {
+      0% { transform: translateY(-50px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeZoom {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Main Page */
+    #main {
+      display: none;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #003366;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+
+    header h2 {
+      font-size: 1.8em;
+    }
+
+    header img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .section {
+      padding: 60px 30px;
+      background: #fff;
+      margin-bottom: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      font-size: 2em;
+      color: #003366;
+      margin-bottom: 20px;
+    }
+
+    .next-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 30px;
+      background: linear-gradient(45deg, #0077b6, #00b4d8);
+      color: white;
+      text-decoration: none;
+      font-size: 1.1em;
+      border-radius: 30px;
+      transition: 0.3s ease;
+    }
+
+    .next-btn:hover {
+      background: linear-gradient(45deg, #00b4d8, #0077b6);
+      transform: scale(1.05);
+    }
+
+    footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+            /*------------------------------------------------------------*/
+/* سكشن 1 بإطار متحرك */
+#section1 {
+  position: relative;
+  background: #f9fcff;
+  padding: 60px 30px;
+  border-radius: 25px;
+  margin: 20px;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  animation: fadeInSection1 1s ease forwards;
+}
+
+/* الإطار المتحرك */
+#section1::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 30px;
+  background: linear-gradient(270deg, #1e262b, #7b498a, #291b23, #fcfcfc);
+  background-size: 600% 600%;
+  z-index: -1;
+  animation: borderMove 6s linear infinite;
+}
+
+/* عنوان تمهيدي */
+#section1 .pre-title {
+  display: inline-block;
+  font-size: 1.4em;
+  color: #0077b6;
+  background: linear-gradient(270deg, #cfd8dd, #dbd8c0, #a8b1b0, #aab7be);
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: fadeInText 1s ease forwards;
+}
+
+
+/* عنوان الدرس مع كتابة تدريجية */
+#section1 .lesson-title {
+  font-size: 2.5em;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #e2da93;
+  width: 0;
+  margin: 0 auto 30px;
+  animation: typewriter 4s steps(40) 1s forwards;
+}
+
+/* صورة الدرس */
+#section1 .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  perspective: 1000px;
+}
+
+#section1 .lesson-image {
+  width: 60%;
+  max-width: 350px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+#section1 .lesson-image:hover {
+  transform: scale(1.05) rotateX(4deg) rotateY(4deg);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* زر التالي */
+#section1 .next-btn {
+  display: inline-block;
+  background: linear-gradient(45deg, #0077b6, #00b4d8);
+  color: white;
+  text-decoration: none;
+  padding: 14px 40px;
+  font-size: 1.1em;
+  border-radius: 50px;
+  box-shadow: 0 6px 18px rgba(0, 119, 182, 0.3);
+  transition: transform 0.3s ease;
+  opacity: 0;
+  animation: fadeInText 1s ease forwards 4.5s;
+}
+
+#section1 .next-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #00b4d8, #0077b6);
+}
+
+/* أنيميشن الكتابة */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* أنيميشن fade in */
+@keyframes fadeInSection1 {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInText {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* أنيميشن تحريك الإطار */
+@keyframes borderMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+            /*------------------------------------------------------------*/
+
+            /* ======= سكشن 2 ======= */
+#section2 {
+  background: linear-gradient(to bottom, #fefefe, #e8f4ff);
+  padding: 60px 40px;
+  border-radius: 25px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+  animation: slideFadeIn 1s ease-in-out forwards;
+  opacity: 0;
+}
+
+/* العنوان الرئيسي مع كتابة حرفية */
+#section2 .section2-title {
+  font-size: 2.4em;
+  color: #003366;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #0077b6;
+  width: 0;
+  animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
+  margin-bottom: 20px;
+}
+
+/* العنوان الفرعي fade مع تأخير */
+#section2 .section2-subtitle {
+  font-size: 1.2em;
+  color: #333;
+  text-align: center;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards 2.5s;
+  margin-bottom: 25px;
+}
+
+/* قائمة الأهداف */
+#section2 .section2-list {
+  list-style-type: decimal;
+  font-size: 1.1em;
+  padding-left: 40px;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  color: #444;
+  line-height: 1.8;
+}
+
+#section2 .section2-list li {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+#section2 .section2-list li:nth-child(1) { animation-delay: 3.2s; }
+#section2 .section2-list li:nth-child(2) { animation-delay: 3.5s; }
+#section2 .section2-list li:nth-child(3) { animation-delay: 3.8s; }
+#section2 .section2-list li:nth-child(4) { animation-delay: 4.1s; }
+
+/* صورة صغيرة على اليسار */
+#section2 .section2-image-container {
+  position: absolute;
+  left: 25px;
+  top: 25px;
+}
+
+#section2 .section2-image {
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+#section2 .section2-image:hover {
+  transform: scale(1.2) rotate(5deg);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* زر التالي */
+#section2 .next-btn {
+  display: inline-block;
+  margin-top: 50px;
+  background: linear-gradient(45deg, #0077b6, #00b4d8);
+  color: white;
+  border: none;
+  padding: 14px 35px;
+  font-size: 1.1em;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 119, 182, 0.4);
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards 4.5s;
+}
+
+#section2 .next-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #00b4d8, #0077b6);
+  box-shadow: 0 12px 30px rgba(0, 119, 182, 0.6);
+}
+
+/* الصورة المكبرة */
+.image-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.image-popup img {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+  animation: zoomInBig 0.5s ease forwards;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+@keyframes zoomInBig {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+#section2 .section2-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0;
+  margin: 25px auto;
+  max-width: 650px;
+  list-style: none;
+}
+
+/* تنسيق كل بطاقة */
+#section2 .section2-list li {
+  background: linear-gradient(to right, #e7f8ff, #f4fcff);
+  border-left: 4px solid #0077b6;
+  padding: 14px 20px 14px 60px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-size: 1em;
+  color: #003344;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInCard 0.8s ease forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+/* الأيقونة */
+#section2 .section2-list .icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#section2 .section2-list .icon img {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
+}
+
+/* تأثير المرور */
+#section2 .section2-list li:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(to right, #daf3ff, #effaff);
+}
+
+/* التتابع */
+#section2 .section2-list li:nth-child(1) { animation-delay: 2.4s; }
+#section2 .section2-list li:nth-child(2) { animation-delay: 2.8s; }
+#section2 .section2-list li:nth-child(3) { animation-delay: 3.2s; }
+#section2 .section2-list li:nth-child(4) { animation-delay: 3.6s; }
+
+@keyframes fadeInCard {
+  0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+        /* --------------------------- sec2 --------------------------------*/
+/* سكشن 3 */
+#section3 {
+  background: linear-gradient(to bottom, #eef6fc, #dff1ff);
+  padding: 70px 30px;
+  border-radius: 30px;
+  box-shadow: inset 0 0 20px rgba(0, 119, 182, 0.05), 0 12px 40px rgba(0, 0, 0, 0.08);
+  animation: fadeInSection3 1.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(50px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* العنوان الرئيسي */
+.section3-title {
+  font-size: 2.7em;
+  color: #003d66;
+  margin-bottom: 50px;
+  position: relative;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideInText 1.2s ease forwards;
+}
+
+/* الحاوية */
+.section3-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+/* البطاقة */
+.section3-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px 35px;
+  width: 320px;
+  text-align: right;
+  box-shadow: 0 12px 30px rgba(0, 119, 182, 0.12);
+  position: relative;
+  animation: fadeInCard 1.4s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+}
+
+/* تأثير الإطار المتحرك */
+.section3-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  z-index: 1;
+  animation: rotateBorder 4s linear infinite;
+  pointer-events: none;
+  background: linear-gradient(135deg, #00b4d8, #0077b6, #90e0ef, #0077b6);
+  background-size: 400% 400%;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  padding: 2px;
+}
+
+/* تكبير عند المرور */
+.section3-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 119, 182, 0.2);
+}
+
+/* عنوان البطاقة */
+.section3-card-title {
+  font-size: 1.5em;
+  color: #005077;
+  margin-bottom: 20px;
+  font-weight: bold;
+  border-right: 5px solid #00b4d8;
+  padding-right: 10px;
+}
+
+/* قائمة العناصر */
+.section3-card-list {
+  list-style: none;
+  padding: 0;
+  font-size: 1.1em;
+  color: #333;
+  line-height: 2;
+}
+
+.section3-card-list li {
+  position: relative;
+  background: #f1f9ff;
+  padding: 10px 15px 10px 40px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 10px rgba(0, 119, 182, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.section3-card-list li:hover {
+  transform: scale(1.03);
+}
+
+/* أيقونة */
+.section3-card-list li::before {
+  content: url("data:image/svg+xml,%3Csvg fill='%23007bff' viewBox='0 0 16 16' height='20' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 1a7 7 0 0 0-5.468 11.37l-1.65 1.65a.5.5 0 0 0 .707.708l1.65-1.651A7 7 0 1 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2z'/%3E%3C/svg%3E");
+  position: absolute;
+  left: 10px;
+  top: 12px;
+}
+
+/* زر التالي */
+.section3-next-btn {
+  background: linear-gradient(45deg, #0077b6, #00b4d8);
+  color: white;
+  border: none;
+  padding: 14px 35px;
+  font-size: 1.1em;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 119, 182, 0.4);
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.section3-next-btn:hover {
+  transform: scale(1.06);
+  background: linear-gradient(45deg, #00b4d8, #0077b6);
+}
+
+/* أنيميشن */
+@keyframes fadeInSection3 {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInText {
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInCard {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotateBorder {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+        /*------------------------------------------------------------*/
+        /* --------------------------- sec4 --------------------------------*/
+    
+    /*------------------------------------------------------------*/
+
+    #section4 {
+  background: url("photo/anaser.png") no-repeat center center/cover;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  overflow: hidden;
+  animation: fadeInSection4 1.5s ease forwards;
+}
+
+.section4-title {
+  font-size: 2.8em;
+  color: #ffffff;
+  margin-bottom: 40px;
+  text-shadow: 0 2px 10px rgba(255, 253, 253, 0.966);
+  animation: slideDown 1.2s ease-out forwards;
+}
+
+/* المربع الضبابي */
+.section4-overlay {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  animation: fadeInCard 1.2s ease-out forwards 0.5s;
+}
+
+/* شبكة الأيقونات */
+.section4-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 25px;
+  justify-items: center;
+  align-items: center;
+}
+
+/* عنصر أيقونة */
+.section4-item {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  padding: 20px 15px;
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: appearUp 1s ease forwards;
+  animation-delay: var(--delay, 0.6s);
+}
+
+.section4-item img {
+  width: 45px;
+  height: 45px;
+  margin-bottom: 12px;
+  filter: brightness(1.2);
+}
+
+.section4-item span {
+  display: block;
+  font-size: 1.1em;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+/* تأثير hover */
+.section4-item:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* الزر التالي */
+.next-btn {
+  margin-top: 40px;
+  background: linear-gradient(45deg, #00b4d8, #0077b6);
+  color: white;
+  border: none;
+  padding: 14px 35px;
+  font-size: 1.1em;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 119, 182, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+.next-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #0077b6, #00b4d8);
+}
+
+/* أنيميشن */
+@keyframes fadeInSection4 {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  0% { transform: translateY(-30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes appearUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+        /* --------------------------- sec5 --------------------------------*/
+   /* الخلفية المتحركة */
+.section5 {
+  position: relative;
+  padding: 80px 30px;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #1e3c72, #2a5298, #1e3c72);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.section5-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  gap: 60px;
+  width: 100%;
+  animation: fadeInUp 1s ease-in-out forwards;
+}
+
+.section5-text {
+  flex: 1;
+  padding: 30px;
+  border-radius: 20px;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.glass-bg {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.section5-title {
+  font-size: 38px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: slideInLeft 1s ease-in-out;
+}
+
+.section5-description {
+  font-size: 18px;
+  line-height: 1.8;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.section5-next-btn {
+  display: inline-block;
+  margin-top: 30px;
+  background-color: #00bcd4;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 0 10px #00bcd4;
+  transition: background 0.3s ease;
+}
+
+.section5-next-btn:hover {
+  background-color: #0097a7;
+  box-shadow: 0 0 20px #0097a7;
+}
+
+.section5-image {
+  flex-shrink: 0;
+  animation: bounceIn 1s ease;
+}
+
+.section5-image img {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 10px white);
+}
+
+.section5-image img:hover {
+  transform: scale(1.15);
+}
+
+/* الصورة المكبرة */
+.section5-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.section5-popup img {
+  width: 320px;
+  height: 320px;
+  animation: zoomIn 0.4s ease;
+  border-radius: 20px;
+}
+
+/* الأنيميشن */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bounceIn {
+  0%   { transform: scale(0.7); opacity: 0; }
+  60%  { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.section5-modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+}
+
+.section5-modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  animation: fadeInModal 0.4s ease;
+}
+
+.section5-modal-content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.section5-modal-content button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.section5-modal-content button:first-child {
+  background-color: #2196f3;
+  color: white;
+}
+
+.section5-modal-content button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+    /*------------------------------------------------------------*/
+        /* --------------------------- sec6 --------------------------------*/
+    
+.section6 {
+  padding: 80px 30px;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #1b2735, #090a0f, #1b2735);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #fff;
+  position: relative;
+}
+
+.section6-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  max-width: 1100px;
+  width: 100%;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.section6-text {
+  flex: 1;
+  padding: 30px;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.section6-title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ffffff;
+  animation: slideInLeft 1s ease;
+}
+
+.section6-description {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  color: #dddddd;
+  animation: fadeIn 1.5s ease;
+}
+
+.section6-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.section6-btn {
+  padding: 12px 20px;
+  background-color: #00c9a7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 12px #00c9a7;
+  transition: background 0.3s ease;
+}
+
+.section6-btn:hover {
+  background-color: #009e85;
+  box-shadow: 0 0 18px #009e85;
+}
+
+.section6-next-btn {
+  background-color: #2196f3;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  box-shadow: 0 0 10px #2196f3;
+  transition: background 0.3s ease;
+}
+
+.section6-next-btn:hover {
+  background-color: #1769aa;
+  box-shadow: 0 0 20px #1769aa;
+}
+
+.section6-image img {
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 10px white);
+}
+
+.section6-image img:hover {
+  transform: scale(1.5);
+}
+
+/* الصورة المكبرة */
+.section6-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.section6-popup img {
+  width: 500px;
+  height: 500px;
+  animation: zoomIn 0.4s ease;
+  border-radius: 20px;
+}
+
+/* المودال */
+.section6-modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  justify-content: center;
+  align-items: center;
+}
+
+.section6-modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 450px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  animation: fadeInModal 0.4s ease;
+}
+
+.section6-modal-content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.section6-modal-content button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #f44336;
+  color: white;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.section6-confirm-modal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+}
+
+.section6-confirm-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeInModal 0.4s ease;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.section6-confirm-content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.section6-confirm-content button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.section6-confirm-content button:first-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.section6-confirm-content button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+
+    /*------------------------------------------------------------*/
+        /* --------------------------- sec7 --------------------------------*/
+    
+        .section7 {
+  padding: 80px 30px;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #2c3e50, #4ca1af, #2c3e50);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #fff;
+  position: relative;
+}
+
+.section7-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  max-width: 1100px;
+  width: 100%;
+  margin-bottom: 40px;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.section7-box {
+  flex: 1;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.section7-subtitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  animation: slideInLeft 1s ease;
+}
+
+.section7-text {
+  font-size: 17px;
+  line-height: 1.7;
+  animation: fadeIn 1.5s ease;
+  color: #f1f1f1;
+}
+
+.section7-image img {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 10px white);
+}
+
+.section7-image img:hover {
+  transform: scale(1.2);
+}
+
+.section7-next-btn {
+  background-color: #2196f3;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  box-shadow: 0 0 10px #2196f3;
+  transition: background 0.3s ease;
+}
+
+.section7-next-btn:hover {
+  background-color: #1769aa;
+  box-shadow: 0 0 20px #1769aa;
+}
+
+.section7-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.section7-popup img {
+  width: 320px;
+  height: 320px;
+  animation: zoomIn 0.4s ease;
+  border-radius: 20px;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.section7-confirm-modal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+}
+
+.section7-confirm-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeInModal 0.4s ease;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.section7-confirm-content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.section7-confirm-content button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.section7-confirm-content button:first-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.section7-confirm-content button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+    /*------------------------------------------------------------*/
+        /* --------------------------- sec8 --------------------------------*/
+.section8 {
+  background-color: #f0f0f0;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+
+.section8-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.section8-header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  animation: slideInDown 0.8s ease-in-out;
+}
+
+.section8-header ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+.section8-header li {
+  font-weight: bold;
+  cursor: default;
+  transition: color 0.3s ease;
+}
+
+.section8-header li:hover {
+  color: #f1c40f;
+}
+
+.section8-body {
+  display: flex;
+  min-height: 500px;
+}
+
+.section8-sidebar {
+  width: 200px;
+  background-color: #34495e;
+  color: white;
+  padding: 20px;
+  animation: slideInLeft 1s ease-in-out;
+}
+
+.section8-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.section8-sidebar li {
+  margin: 20px 0;
+  font-weight: bold;
+  cursor: default;
+}
+
+.section8-content {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.section8-content img {
+  width: 100px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.section8-content img:hover {
+  transform: scale(1.2);
+}
+
+.section8-footer {
+  background-color: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  animation: slideInUp 1s ease-in-out;
+}
+
+/* Next button */
+.section8-next-btn {
+  margin: 20px auto;
+  padding: 12px 24px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  animation: fadeIn 3s ease-in-out;
+}
+
+.section8-next-btn:hover {
+  background-color: #1769aa;
+}
+
+/* Image popup */
+.section8-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(3px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.section8-popup img {
+  width: 300px;
+  animation: zoomIn 0.4s ease;
+  border-radius: 15px;
+}
+
+/* Confirmation Modal */
+.section8-modal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+}
+
+.section8-modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeInModal 0.4s ease;
+}
+
+.section8-modal-content button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.section8-modal-content button:first-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.section8-modal-content button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Tooltip */
+.section8-hint {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 9999;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Animations */
+@keyframes slideInDown {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+    /*-------------------------------sec9-----------------------------*/
+.section9 {
+  background-color: #f7f9fc;
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+.section9-quiz-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
+.section9-truefalse, .section9-mcq {
+  width: 45%;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.section9 h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.question {
+  margin: 15px 0;
+}
+
+.question p {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.question button {
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.question button:hover {
+  background-color: #2c80b4;
+}
+
+/* الرسالة */
+.section9-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(3px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: green;
+  animation: fadeIn 0.3s ease;
+}
+
+/* زر التالي */
+.next-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 30px;
+  background-color: #2ecc71;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.next-btn:hover {
+  background-color: #27ae60;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+
+        /* --------------------------- sec10 --------------------------------*/
+    .section10 {
+  background-color: #f0f0f0;
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+.section10-show-msg-btn {
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+.section10-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.section10-popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  text-align: center;
+  font-size: 18px;
+  animation: fadeIn 0.3s ease;
+}
+
+.section10-popup-content button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+    /*------------------------------------------------------------*/
+  </style>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div id="splash">
+    <h1>Computer Science</h1>
+    <img src="photo/FRRWER.png" alt="Computer Science">
+    <p>الأستاذ محمد السيد</p>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main">
+
+    <header>
+      <h2>Computer Science</h2>
+      <img src="photo/FRRWER.png" alt="Profile">
+    </header>
+
+    <div class="content">
+      <div class="section" id="section1">
+  <p class="pre-title">عنوان الدرس:</p>
+  <h2 class="lesson-title typewriter"> تعرّف على مواقع الويب 
+    <br>Learn about websites
+  </h2>
+
+  <div class="image-container">
+    <img src="photo/sec1.jfif" alt="موقع الويب" class="lesson-image">
+  </div>
+
+  <a href="#section2" class="next-btn">Next</a>
+</div>
+
+
+      <div class="section" id="section2">
+        <h2 class="section2-title">أهداف الدرس:</h2>
+    <p class="section2-subtitle">في نهاية هذا الدرس يجب أن يكون الطالب قادراً على:</p>
+    <ul class="section2-list">
+      <li>🌐    معرفة ما هو موقع الويب   </li>
+      <li>🧩   معرفة تركيبة موقع الويب   </li>
+      <li> ⚖️  تحديد الفرق بين موقع الويب والتطبيق  </li>
+      <li>📄   تحديد مكونات صفحة الويب   </li>
+    </ul>
+
+    <div class="section2-image-container">
+      <img src="photo/sec2.jpg" alt="أيقونة الدرس" class="section2-image" onclick="openImage(this.src)">
+    </div>
+
+    <!-- الصورة المكبرة تظهر عند الضغط -->
+    <div class="image-popup" id="imagePopup" onclick="closeImage()">
+      <img id="popupImg" src="photo/sec2.jpg" alt="عرض الصورة">
+    </div>
+        <a href="#section3" class="next-btn">Next</a>
+      </div>
+
+      <div class="section" id="section3">
+  <h2 class="section3-title">المكونات التعليمية</h2>
+
+  <div class="section3-container">
+    <!-- البطاقة اليمنى -->
+    <div class="section3-card">
+      <h3 class="section3-card-title">الاستراتيجية المستخدمة</h3>
+      <ul class="section3-card-list">
+        <li>التعليم الإلكتروني</li>
+      </ul>
+    </div>
+
+    <!-- البطاقة اليسرى -->
+    <div class="section3-card">
+      <h3 class="section3-card-title">التقنيات المستخدمة</h3>
+      <ul class="section3-card-list">
+        <li>جهاز الكمبيوتر</li>
+        <li>السبورة الذكية</li>
+      </ul>
+    </div>
+  </div>
+
+  <a href="#section4" class="section3-next-btn">التالي</a>
+</div>
+
+
+      <div class="section" id="section4">
+  <h2 class="section4-title">عناصر الدرس</h2>
+  
+  <div class="section4-overlay">
+    <div class="section4-grid">
+      
+      <a href="#section5" class="section4-item">
+        <img src="photo/technology.png" alt="مفهوم موقع الويب">
+        <span>مفهوم موقع الويب</span>
+      </a>
+
+      <a href="#section6" class="section4-item">
+        <img src="photo/data-management.png" alt="تركيبة موقع الويب">
+        <span>تركيبة موقع الويب</span>
+      </a>
+
+      <a href="#section8" class="section4-item">
+        <img src="photo/hand.png" alt="مكونات صفحة الويب">
+        <span>مكونات صفحة الويب</span>
+      </a>
+
+      <a href="#section7" class="section4-item">
+        <img src="photo/future.png" alt="الفرق بين موقع الويب والابلكيشن">
+        <span>الفرق بين موقع الويب والابلكيشن</span>
+      </a>
+
+    </div>
+  </div>
+
+  <a href="#section9" class="next-btn">Next</a>
+</div>
+
+
+      <div class="section section5" id="section5">
+  <div class="section5-overlay"></div> <!-- الخلفية الضبابية المتحركة -->
+
+  <div class="section5-content">
+    <div class="section5-text">
+      <h2 class="section5-title"> ما هو موقع الويب؟</h2>
+      <p class="section5-description">
+        موقع الويب هو مجموعة من الصفحات المترابطة التي تُعرض على الإنترنت تحت عنوان نطاق (Domain) معين. <br><br>
+        يتم بناؤه باستخدام لغات مثل HTML وCSS وJavaScript، ويُستخدم لنشر المعلومات، تقديم الخدمات، البيع والشراء، التعليم، الترفيه، والتواصل مع الآخرين. <br><br>
+        يمكن أن يكون بسيطًا كصفحة تعريفية أو معقدًا كتطبيق متكامل يتفاعل مع المستخدم وقواعد بيانات.
+      </p>
+      <button class="section5-next-btn" onclick="showMessage()">التالي</button>
+
+<!-- صندوق الرسالة -->
+<div class="section5-modal" id="section5Modal">
+  <div class="section5-modal-content">
+    <p>    ما هو موقع الويب؟    </p>
+    <button onclick="goToSection4()">متابعة</button>
+    <button onclick="closeMessage()">إلغاء</button>
+  </div>
+</div>
+    </div>
+
+    <div class="section5-image">
+      <img src="photo/sec5.jpg" alt="Web Icon" onclick="showImage()" />
+    </div>
+  </div>
+
+  <!-- الصورة المكبرة -->
+  <div class="section5-popup" id="popup" onclick="hideImage()">
+    <img src="photo/sec5.jpg" alt="Web Icon" />
+  </div>
+</div>
+
+
+
+      <div class="section section6" id="section6">
+  <div class="section6-content">
+    <!-- جزء النص والزر -->
+    <div class="section6-text glass-bg">
+      <h2 class="section6-title"> مكونات موقع الويب الأساسية</h2>
+      <p class="section6-description">
+        يتكوّن أي موقع ويب حديث من مجموعة من العناصر التكنولوجية التي تعمل سويًا لتقديم تجربة مستخدم غنية. دعنا نستعرض بعض الأساسيات.
+      </p>
+      
+      <div class="section6-buttons">
+        <button onclick="showExplanation('lang')" class="section6-btn">لغة البرمجة</button>
+        <button onclick="showExplanation('framework')" class="section6-btn">إطار العمل</button>
+        <button onclick="showExplanation('database')" class="section6-btn">قواعد البيانات</button>
+      </div>
+      
+      <button class="section6-next-btn" onclick="showSection6Message()">Next</button>
+<!-- صندوق الرسالة -->
+<div class="section6-confirm-modal" id="section6ConfirmModal">
+  <div class="section6-confirm-content">
+    <p>  أذكر  مكونات موقع الويب الأساسية؟   </p>
+    <button onclick="goToSection4()">متابعة</button>
+    <button onclick="closeSection6Message()">إلغاء</button>
+  </div>
+</div>
+
+    </div>
+
+    <!-- الأيقونة -->
+    <div class="section6-image">
+      <img src="photo/sec6.jpg" alt="Icon" onclick="showImage6()" />
+    </div>
+  </div>
+
+  <!-- الصورة المكبرة -->
+  <div class="section6-popup" id="popup6" onclick="hideImage6()">
+    <img src="photo/sec6.jpg" alt="Icon Large" />
+  </div>
+
+  <!-- صناديق الشرح -->
+  <div class="section6-modal" id="section6Modal">
+    <div class="section6-modal-content" id="section6ModalContent">
+      <p id="section6ModalText"></p>
+      <button onclick="closeExplanation()">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+
+      <div class="section section7" id="section7">
+  <div class="section7-content">
+    <!-- نص الويب -->
+    <div class="section7-box glass-bg">
+      <h3 class="section7-subtitle">موقع الويب</h3>
+      <p class="section7-text">
+        موقع الويب يُستخدم عبر المتصفح ولا يحتاج إلى تثبيت. يعمل على كل الأجهزة، ويُستخدم لنشر المعلومات والخدمات مثل المتاجر الإلكترونية والمدونات.
+      </p>
+    </div>
+
+    <!-- صورة الأيقونة -->
+    <div class="section7-image">
+      <img src="https://cdn-icons-png.flaticon.com/512/266/266137.png" alt="Icon" onclick="showImage7()" />
+    </div>
+
+    <!-- نص التطبيق -->
+    <div class="section7-box glass-bg">
+      <h3 class="section7-subtitle">تطبيق الأبلكيشن</h3>
+      <p class="section7-text">
+        التطبيق يُثبّت على الهاتف أو الجهاز ويستخدم خصائص النظام مثل الكاميرا والموقع. يُفضل للتجارب المتقدمة مثل الألعاب والخدمات التفاعلية.
+      </p>
+    </div>
+  </div>
+
+  <button class="section7-next-btn" onclick="showSection7Message()">Next</button>
+<!-- صندوق تأكيد الرجوع -->
+<div class="section7-confirm-modal" id="section7ConfirmModal">
+  <div class="section7-confirm-content">
+    <p>أذكر الفرق بين موقع الويب والأبلكيشن؟</p>
+    <button onclick="goToSection4From7()">متابعة</button>
+    <button onclick="closeSection7Message()">إلغاء</button>
+  </div>
+</div>
+
+
+  <!-- الصورة المكبرة -->
+  <div class="section7-popup" id="popup7" onclick="hideImage7()">
+    <img src="photo/sec7.jpg" alt="Expanded Icon" />
+  </div>
+</div>
+
+
+      <div class="section section8" id="section8">
+  <div class="section8-container">
+
+    <!-- Header -->
+    <header class="section8-header" onmouseover="showHint('header')" onmouseout="hideHint()">
+      <nav>
+        <ul>
+          <li>Home</li>
+          <li>About</li>
+          <li>Services</li>
+          <li>Contact</li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="section8-body">
+      <!-- Sidebar -->
+      <aside class="section8-sidebar" onmouseover="showHint('sidebar')" onmouseout="hideHint()">
+        <ul>
+          <li>Dashboard</li>
+          <li>Profile</li>
+          <li>Settings</li>
+        </ul>
+      </aside>
+
+      <!-- Content Area -->
+      <main class="section8-content" onmouseover="showHint('content')" onmouseout="hideHint()">
+  <h3>القسم الرئيسي &lt;main&gt;</h3>
+  <p>هذا هو الجزء الرئيسي من الصفحة حيث يتم عرض النصوص أو الصور أو الفيديوهات.</p>
+  <p><strong>العنصر المستخدم:</strong> <code>&lt;main&gt;</code> — يحدد المحتوى الأساسي في الصفحة.</p>
+
+  <hr style="margin: 20px 0; width: 80%;">
+
+  <h4>الهيدر &lt;header&gt;</h4>
+  <p>يُستخدم لعرض رأس الموقع، مثل الشعار وقائمة التنقل.</p>
+  <p><strong>العنصر المستخدم:</strong> <code>&lt;header&gt;</code></p>
+
+  <h4>الشريط الجانبي &lt;aside&gt;</h4>
+  <p>يعرض قائمة جانبية تحتوي على روابط أو أدوات مساعدة.</p>
+  <p><strong>العنصر المستخدم:</strong> <code>&lt;aside&gt;</code></p>
+
+  <h4>التذييل &lt;footer&gt;</h4>
+  <p>يظهر أسفل الصفحة ويحتوي غالبًا على حقوق النشر أو روابط إضافية.</p>
+  <p><strong>العنصر المستخدم:</strong> <code>&lt;footer&gt;</code></p>
+
+  <img src="photo/sec8.png" alt="Icon" onclick="expandImage8()" />
+</main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="section8-footer" onmouseover="showHint('footer')" onmouseout="hideHint()">
+      &copy; 2025 All rights reserved.
+    </footer>
+
+    <!-- Next button -->
+    <button class="section8-next-btn" onclick="showSection8Message()">Next</button>
+  </div>
+
+  <!-- Image Modal -->
+  <div class="section8-popup" id="popup8" onclick="hideImage8()">
+    <img src="photo/sec8.png" alt="Expanded Icon" />
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="section8-modal" id="section8Modal">
+    <div class="section8-modal-content">
+      <p> أذكر الوسوم الخاصه بكل جزء من مكونات صفحه الويب؟   </p>
+      <button onclick="goToSection4From8()">Continue</button>
+      <button onclick="closeSection8Message()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Tooltip -->
+  <div class="section8-hint" id="hintBox">Tooltip...</div>
+</div>
+
+
+<div class="section section9" id="section9">
+  <h2>اختبار بعدي حول موقع الويب</h2>
+  <div class="section9-quiz-container">
+
+    <!-- أسئلة صح وخطأ -->
+    <div class="section9-truefalse">
+      <h3>صح أو خطأ</h3>
+      <div class="question">
+        <p>موقع الويب يتكون فقط من صفحة واحدة.</p>
+        <button onclick="checkAnswer(true, false)">صح</button>
+        <button onclick="checkAnswer(false, false)">خطأ</button>
+      </div>
+      <div class="question">
+        <p>الـ &lt;header&gt; يُستخدم لعرض تذييل الصفحة.</p>
+        <button onclick="checkAnswer(true, false)">صح</button>
+        <button onclick="checkAnswer(false, true)">خطأ</button>
+      </div>
+      <div class="question">
+        <p>HTML تُستخدم لتنسيق شكل الموقع.</p>
+        <button onclick="checkAnswer(true, false)">صح</button>
+        <button onclick="checkAnswer(false, true)">خطأ</button>
+      </div>
+      <div class="question">
+        <p>قواعد البيانات تُستخدم لتخزين المحتوى.</p>
+        <button onclick="checkAnswer(true, true)">صح</button>
+        <button onclick="checkAnswer(false, false)">خطأ</button>
+      </div>
+      <div class="question">
+        <p>إطار العمل (Framework) يسهل تطوير الواجهة فقط.</p>
+        <button onclick="checkAnswer(true, false)">صح</button>
+        <button onclick="checkAnswer(false, true)">خطأ</button>
+      </div>
+    </div>
+
+    <!-- أسئلة اختيار من متعدد -->
+    <div class="section9-mcq">
+      <h3>اختر الإجابة الصحيحة</h3>
+      <div class="question">
+        <p>أي من التالي يعتبر لغة برمجة فعلية؟</p>
+        <button onclick="checkAnswer(this, true)">JavaScript</button>
+        <button onclick="checkAnswer(this, false)">HTML</button>
+        <button onclick="checkAnswer(this, false)">CSS</button>
+      </div>
+      <div class="question">
+        <p>ما هو العنصر المسؤول عن عرض محتوى الموقع الرئيسي؟</p>
+        <button onclick="checkAnswer(this, false)">&lt;footer&gt;</button>
+        <button onclick="checkAnswer(this, true)">&lt;main&gt;</button>
+        <button onclick="checkAnswer(this, false)">&lt;aside&gt;</button>
+      </div>
+      <div class="question">
+        <p>ما الفرق الأساسي بين الموقع والتطبيق؟</p>
+        <button onclick="checkAnswer(this, true)">التطبيق يعتمد غالباً على وظائف أكثر تعقيداً</button>
+        <button onclick="checkAnswer(this, false)">لا يوجد فرق</button>
+      </div>
+      <div class="question">
+        <p>أي من التالي مثال على قاعدة بيانات؟</p>
+        <button onclick="checkAnswer(this, true)">Firebase</button>
+        <button onclick="checkAnswer(this, false)">React</button>
+        <button onclick="checkAnswer(this, false)">CSS</button>
+      </div>
+      <div class="question">
+        <p>أي عنصر يستخدم في تذييل الصفحة؟</p>
+        <button onclick="checkAnswer(this, true)">&lt;footer&gt;</button>
+        <button onclick="checkAnswer(this, false)">&lt;header&gt;</button>
+        <button onclick="checkAnswer(this, false)">&lt;main&gt;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- زر التالي -->
+  <a href="#section10" class="next-btn">التالي</a>
+
+  <!-- الرسالة عند الإجابة الصحيحة -->
+  <div class="section9-popup" id="correctPopup">
+    <div class="popup-content">
+      <p>إجابة صحيحة ✅</p>
+    </div>
+  </div>
+  <!-- الرسالة عند الإجابة الخاطئة -->
+<div class="section9-popup" id="wrongPopup">
+  <div class="popup-content" style="color: red;">
+    <p>إجابة خاطئة ❌</p>
+  </div>
+</div>
+
+</div>
+
+
+
+      <div class="section section10" id="section10">
+  <h2>النهاية 🎓</h2>
+
+  <!-- زر إظهار الرسائل -->
+  <button class="section10-show-msg-btn" onclick="showFinalMessage()">عرض الرسالة</button>
+
+  <!-- الرسالة الأولى -->
+  <div class="section10-popup" id="msgBox1">
+    <div class="section10-popup-content">
+      <p>     في ضوء فهمك للدرس قم بالبحث عن اشكال مواقع الويب لمناقشتها المره القادمه     </p>
+      <button onclick="closeFirstMessage()">متابعة</button>
+    </div>
+  </div>
+
+  <!-- الرسالة الثانية -->
+  <div class="section10-popup" id="msgBox2">
+    <div class="section10-popup-content">
+      <p>شكرًا لمتابعتكم الدرس! 💡</p>
+      <button onclick="closeSecondMessage()">إنهاء</button>
+    </div>
+  </div>
+
+  <!-- زر التالي -->
+  <a href="#section1" class="next-btn" id="section10-next-btn" style="display: none;">التالي</a>
+</div>
+
+
+    </div>
+
+    <footer>
+      &copy; 2025 
+Prepared and presented by: Professor Mohamed El-Sayed
+    </footer>
+  </div>
+
+  <script>
+    // بعد 4 ثوانٍ، إخفاء شاشة الاسبلاش وعرض الصفحة الرئيسية
+    setTimeout(() => {
+      document.getElementById("splash").classList.add("fade-out");
+      setTimeout(() => {
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("main").style.display = "flex";
+        location.hash = "#section1";
+      }, 1000);
+    }, 4000);
+
+    // إذا كان الرابط يحتوي على سكشن، إعرض الصفحة مباشرة
+    window.addEventListener("DOMContentLoaded", () => {
+      if (window.location.hash.startsWith("#section")) {
+        document.getElementById("splash").style.display = "none";
+        document.getElementById("main").style.display = "flex";
+      }
+    });
+
+    //------------------------------------------------
+    function openImage(src) {
+    const popup = document.getElementById("imagePopup");
+    const img = document.getElementById("popupImg");
+    img.src = src;
+    popup.style.display = "flex";
+  }
+
+  function closeImage() {
+    const popup = document.getElementById("imagePopup");
+    popup.style.display = "none";
+  }
+
+  //-------------------------------------
+    function showImage() {
+    document.getElementById("popup").style.display = "flex";
+  }
+
+  function hideImage() {
+    document.getElementById("popup").style.display = "none";
+  }
+  //------------
+
+   function showMessage() {
+    document.getElementById("section5Modal").style.display = "flex";
+  }
+
+  function closeMessage() {
+    document.getElementById("section5Modal").style.display = "none";
+  }
+
+  function goToSection4() {
+    closeMessage();
+    setTimeout(() => {
+      location.href = "#section4";
+    }, 100); // تأخير بسيط بعد الإغلاق
+  }
+  //-------------------------------
+   function showSection6Message() {
+    document.getElementById("section6ConfirmModal").style.display = "flex";
+  }
+
+  function closeSection6Message() {
+    document.getElementById("section6ConfirmModal").style.display = "none";
+  }
+
+  function goToSection4() {
+    closeSection6Message();
+    setTimeout(() => {
+      location.href = "#section4";
+    }, 100);
+  }
+  //-------------------------------
+    function showImage6() {
+    document.getElementById("popup6").style.display = "flex";
+  }
+
+  function hideImage6() {
+    document.getElementById("popup6").style.display = "none";
+  }
+
+  function showExplanation(type) {
+    const modal = document.getElementById("section6Modal");
+    const text = document.getElementById("section6ModalText");
+
+    if (type === 'lang') {
+      text.innerText = "لغة البرمجة هي الأساس لكتابة التعليمات التي يفهمها المتصفح أو الخادم. من أشهر اللغات: JavaScript, HTML, CSS.";
+    } else if (type === 'framework') {
+      text.innerText = "إطار العمل يوفر هيكلًا جاهزًا لتطوير موقع الويب بسرعة وكفاءة. مثل: React, Angular, Vue.";
+    } else if (type === 'database') {
+      text.innerText = "قاعدة البيانات تُستخدم لتخزين واسترجاع البيانات من الموقع. مثل: MySQL, MongoDB, PostgreSQL.";
+    }
+
+    modal.style.display = "flex";
+  }
+
+  function closeExplanation() {
+    document.getElementById("section6Modal").style.display = "none";
+  }
+  //-------------------------------
+  function showImage7() {
+    document.getElementById("popup7").style.display = "flex";
+  }
+
+  function hideImage7() {
+    document.getElementById("popup7").style.display = "none";
+  }
+  //----------------------------------
+   function showSection7Message() {
+    document.getElementById("section7ConfirmModal").style.display = "flex";
+  }
+
+  function closeSection7Message() {
+    document.getElementById("section7ConfirmModal").style.display = "none";
+  }
+
+  function goToSection4From7() {
+    closeSection7Message();
+    setTimeout(() => {
+      location.href = "#section4";
+    }, 100);
+  }
+  //--------------------
+
+    // Expand Image
+  function expandImage8() {
+    document.getElementById("popup8").style.display = "flex";
+  }
+
+  function hideImage8() {
+    document.getElementById("popup8").style.display = "none";
+  }
+
+  // Confirmation before navigating
+  function showSection8Message() {
+    document.getElementById("section8Modal").style.display = "flex";
+  }
+
+  function closeSection8Message() {
+    document.getElementById("section8Modal").style.display = "none";
+  }
+
+  function goToSection4From8() {
+    closeSection8Message();
+    setTimeout(() => {
+      location.href = "#section4";
+    }, 100);
+  }
+
+  // Tooltip logic
+  function showHint(type) {
+    const hintBox = document.getElementById("hintBox");
+    let message = "";
+
+    switch (type) {
+      case "header":
+        message = "The header contains the main navigation menu.";
+        break;
+      case "sidebar":
+        message = "The sidebar helps users navigate within the app.";
+        break;
+      case "content":
+        message = "This is where the main content like text or media is shown.";
+        break;
+      case "footer":
+        message = "The footer appears at the bottom with site rights or links.";
+        break;
+    }
+
+    hintBox.innerText = message;
+    hintBox.style.display = "block";
+    document.addEventListener("mousemove", moveHintBox);
+  }
+
+  function hideHint() {
+    const hintBox = document.getElementById("hintBox");
+    hintBox.style.display = "none";
+    document.removeEventListener("mousemove", moveHintBox);
+  }
+
+  function moveHintBox(e) {
+    const hintBox = document.getElementById("hintBox");
+    hintBox.style.left = (e.pageX + 15) + "px";
+    hintBox.style.top = (e.pageY + 15) + "px";
+  }
+  //--------------------------------
+  function checkAnswer(el, isCorrect) {
+    if (isCorrect) {
+      showPopup("correctPopup");
+    } else {
+      showPopup("wrongPopup");
+      if (el && el.style) {
+        el.style.backgroundColor = "#e74c3c";
+        setTimeout(() => {
+          el.style.backgroundColor = "#3498db";
+        }, 800);
+      }
+    }
+  }
+
+  function showPopup(id) {
+    const popup = document.getElementById(id);
+    popup.style.display = "flex";
+    setTimeout(() => {
+      popup.style.display = "none";
+    }, 1500);
+  }
+  //-----------------------------------------
+   function showFinalMessage() {
+    document.getElementById("msgBox1").style.display = "flex";
+  }
+
+  function closeFirstMessage() {
+    document.getElementById("msgBox1").style.display = "none";
+    setTimeout(() => {
+      document.getElementById("msgBox2").style.display = "flex";
+    }, 300);
+  }
+
+  function closeSecondMessage() {
+    document.getElementById("msgBox2").style.display = "none";
+    document.getElementById("section10-next-btn").style.display = "inline-block";
+  }
+  </script>
+
+</body>
+</html>
